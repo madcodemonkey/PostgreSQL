@@ -53,7 +53,7 @@ Run the project.
 Long winded version:
 In order to use vector fields, we are following the instructions given with the 
 [pgvector NuGet package](https://github.com/pgvector/pgvector-dotnet#entity-framework-core).
-They call for use to execute a specific command after creating the database:
+They require us to execute a specific command after creating the database:
 ```CREATE EXTENSION vector;```
 
 I've added that command to the 20231011175629_initial.cs migration file by hand.
