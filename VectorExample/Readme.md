@@ -1,12 +1,10 @@
 # Vector example
----
 This example shows how to create vector fields.  It also ties into Azure OpenAI to generate the embeddings for the vector fields.
 The database is created using code migrations and will run automatically be default, so please **setup the database and 
 the appsettings.json before you run it.**
 
 
 # Setup
----
 ## PostgreSQL Server Setup
 1. Create a 'Azure Database for PostgreSQL flexible server' resource in the Azure Portal.
    - Basic options
@@ -81,12 +79,11 @@ Run the project.
    - Update the "OpenAI:Key" with Key1 or Key2
 3. Left-Click on "Model Deployments" and "Management Deployments" this will open Azure OpenAI Studio
 4. Create a deployment using the "text-embedding-ada-002" model version 2 and give it a name and Left-click "Create" button
+   - Extra credit given if you use the "Advanced Option" to NOT consume all the remaining tokens!
 5. Update appsettings.json (or override with secrets.json)
    - Update the "OpenAI:DeploymentOrModelName" with then name you chose in step 4
-   - Extra credit given if you use the "Advanced Option" to NOT consume all the remaining tokens!
 
 # Populate the Vector fields with embeddings
----
 1. Run the Example Web API project as your startup project.
 2. Use the postman collection at the root of this repository to call the "DataManipulation" controller's "Update-Vector-Fields" POST method 
    till you consistently get back zero items updated.  You can increase the batch size if you desire and we will still save every 10th item 
@@ -94,7 +91,6 @@ Run the project.
    the OpenAI endoint as we try to generate embeddings for the fields.
 
 # Searching
----
 1. Run the Example Web API project as your startup project.
 2. Use the postman collection at the root of this repository to call "Search" method using semantic type queries (e.g. what services use CDNs?)
    - Note 1: See the database or the AzureCatalog.json in the Example.Repository project (seeds folder) to get a feel for what questions you can ask.
@@ -102,12 +98,10 @@ Run the project.
              doing a cosine comparision to find the best of those (see the code in CloudResourceRepository.cs, which lives in the Example.Repository project).
 
 # Tools
----
 - You can connect to the the PostgreSQL database using [Azure Data Studio](https://learn.microsoft.com/en-us/sql/azure-data-studio/download-azure-data-studio?view=sql-server-ver16&tabs=redhat-install%2Credhat-uninstall) 
   with the PostgreSQL extension from Microsoft (add the way you add VSCode extension since Azure Data Studio uses the same shell as VSCode it should be very familiar).
 
 # Warnings
----
 - Update these ASAP when they go out of beta
    - I'm using a beta version of Microsoft.SemanticKernel.Core (1.0.0-beta1) so they may move the CosineSimilarity extension I used in CloudResourceRepository.cs to a different location.
    - I'm using a beta version of Azure.AI.OpenAI (1.0.0-beta.8)
