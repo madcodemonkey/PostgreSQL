@@ -1,9 +1,9 @@
-﻿ 
+﻿using Example.Model;
 using Example.Repository;
 
 namespace Example.Services;
 
-public class CustomDataService : ICustomDataService
+public class CloudResourceService : ICloudResourceService
 {
     private readonly ICloudResourceRepository _cloudResourceRepository;
     private readonly IOpenAIService _openAIService;
@@ -11,12 +11,27 @@ public class CustomDataService : ICustomDataService
     /// <summary>
     /// Constructor
     /// </summary>
-    public CustomDataService(ICloudResourceRepository cloudResourceRepository,
+    public CloudResourceService(ICloudResourceRepository cloudResourceRepository,
         IOpenAIService openAIService)
     {
         _cloudResourceRepository = cloudResourceRepository;
         _openAIService = openAIService;
-    } 
+    }
+
+    /// <summary>
+    /// Finds the items nearest to the query text.
+    /// </summary>
+    /// <param name="query">Query text</param>
+    /// <param name="numberOfNeighbors">Number of neighbors to return</param>
+    public async Task<List<CloudResource>> FindNearestNeighborAsync(string query, int numberOfNeighbors, CancellationToken cancellationToken = default)
+    {
+        // Documentation example: https://github.com/pgvector/pgvector-dotnet#entity-framework-core
+        var embedding =  await _openAIService.GenerateEmbeddingAsync(query, cancellationToken);
+
+        var result = await _cloudResourceRepository.FindNearestNeighborAsync(embedding, numberOfNeighbors, cancellationToken);
+
+        return result;
+    }
 
     /// <summary>
     /// Updates the embeddings for vector fields on any document that has the incorrect Embedding version number.

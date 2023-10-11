@@ -34,6 +34,31 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Search",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:7068/Search?query=what service use CDNs?",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7068",
+							"path": [
+								"Search"
+							],
+							"query": [
+								{
+									"key": "query",
+									"value": "what service use CDNs?"
+								}
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		}

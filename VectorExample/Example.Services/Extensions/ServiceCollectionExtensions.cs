@@ -10,7 +10,7 @@ public static class ServiceCollectionExtensions
     {
         sc.ConfigureSectionSettings<OpenAiSettings>(config, OpenAiSettings.SectionName);
 
-        sc.AddScoped<ICustomDataService, CustomDataService>();
+        sc.AddScoped<ICloudResourceService, CloudResourceService>();
         sc.AddScoped<IOpenAIService, OpenAIService>();
 
         return sc;

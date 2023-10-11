@@ -9,16 +9,16 @@ namespace Example.Controllers;
 public class DataManipulationController : ControllerBase
 {
     private readonly ILogger<DataManipulationController> _logger;
-    private readonly ICustomDataService _customDataService;
+    private readonly ICloudResourceService _cloudResourceService;
 
     /// <summary>
     /// Constructor
     /// </summary>
     public DataManipulationController(ILogger<DataManipulationController> logger,
-        ICustomDataService customDataService)
+        ICloudResourceService cloudResourceService)
     {
         _logger = logger;
-        _customDataService = customDataService;
+        _cloudResourceService = cloudResourceService;
     }
 
     [HttpPost("Update-Vector-Fields")]
@@ -26,7 +26,7 @@ public class DataManipulationController : ControllerBase
     {
         _logger.LogInformation($"Update embeddings in the {nameof(CloudResource)} table!");
 
-        int numberUpdated = await _customDataService.UpdateEmbeddingsAsync(batchSize, cancellationToken);
+        int numberUpdated = await _cloudResourceService.UpdateEmbeddingsAsync(batchSize, cancellationToken);
 
         return $"Updated {numberUpdated} records";
     }
