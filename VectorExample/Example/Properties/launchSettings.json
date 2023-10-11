@@ -9,7 +9,7 @@
     }
   },
   "profiles": {
-    "SimpleEntityFrameworkExample": {
+    "VectorExample": {
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": true,

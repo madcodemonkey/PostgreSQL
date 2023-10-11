@@ -17,7 +17,7 @@ public class CloudResource
     /// Requires the Pgvector.EntityFrameworkCore NuGet package
     /// https://github.com/pgvector/pgvector-dotnet
     /// </remarks>
-    [Column(TypeName = "vector(3)")]
+    [Column(TypeName = "vector(1536)")]
     public Vector? ContentVector { get; set; }
 
     public string Title { get; set; }
@@ -29,7 +29,7 @@ public class CloudResource
     /// Requires the Pgvector.EntityFrameworkCore NuGet package
     /// https://github.com/pgvector/pgvector-dotnet
     /// </remarks>
-    [Column(TypeName = "vector(3)")]
+    [Column(TypeName = "vector(1536)")]
     public Vector? TitleVector { get; set; }
 
     public int VectorEmbeddingVersion { get; set; }

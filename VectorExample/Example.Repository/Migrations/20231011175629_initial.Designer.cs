@@ -12,7 +12,7 @@ using Pgvector;
 namespace Example.Repository.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20231010235852_initial")]
+    [Migration("20231011175629_initial")]
     partial class initial
     {
         /// <inheritdoc />
@@ -42,14 +42,14 @@ namespace Example.Repository.Migrations
                         .HasColumnType("text");
 
                     b.Property<Vector>("ContentVector")
-                        .HasColumnType("vector(3)");
+                        .HasColumnType("vector(1536)");
 
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<Vector>("TitleVector")
-                        .HasColumnType("vector(3)");
+                        .HasColumnType("vector(1536)");
 
                     b.Property<int>("VectorEmbeddingVersion")
                         .HasColumnType("integer");

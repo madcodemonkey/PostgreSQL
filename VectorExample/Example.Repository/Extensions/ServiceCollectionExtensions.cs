@@ -13,12 +13,14 @@ public static class ServiceCollectionExtensions
         config.GetSection(RepositorySettings.SectionName).Bind(repoSettings);
 
         sc.AddSingleton(repoSettings);
-
+        
         sc.AddDbContext<AppDbContext>((serviceProvider, dbContextOptions) =>
         {
             // Using Vectors https://github.com/pgvector/pgvector-dotnet#entity-framework-core
             dbContextOptions.UseNpgsql(repoSettings.DatabaseConnectionString, o => o.UseVector());
         });
+
+        sc.AddScoped<ICloudResourceRepository, CloudResourceRepository>();
 
         return sc;
     }

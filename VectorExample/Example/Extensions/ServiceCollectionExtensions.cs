@@ -1,4 +1,5 @@
 ﻿using Example.Repository;
+using Example.Services;
 
 namespace Example;
 
@@ -8,7 +9,7 @@ public static class ServiceCollectionExtensions
     {
         
         sc.AddRepositories(config);
-
+        sc.AddServices(config);
 
         return sc;
     }

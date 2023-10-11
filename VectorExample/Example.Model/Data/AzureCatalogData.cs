@@ -1,4 +1,6 @@
-﻿namespace Example.Model;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace Example.Model;
 
 public class AzureCatalogData
 {

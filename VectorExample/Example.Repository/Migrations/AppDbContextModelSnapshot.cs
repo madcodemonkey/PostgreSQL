@@ -39,14 +39,14 @@ namespace Example.Repository.Migrations
                         .HasColumnType("text");
 
                     b.Property<Vector>("ContentVector")
-                        .HasColumnType("vector(3)");
+                        .HasColumnType("vector(1536)");
 
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<Vector>("TitleVector")
-                        .HasColumnType("vector(3)");
+                        .HasColumnType("vector(1536)");
 
                     b.Property<int>("VectorEmbeddingVersion")
                         .HasColumnType("integer");

@@ -19,6 +19,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "00 - Solution Items", "00 -
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "02 - Libraries", "02 - Libraries", "{CFFB1BCC-8040-48DD-AA3A-9F7E6B9F6B18}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Example.Services", "Example.Services\Example.Services.csproj", "{E68EB0D6-2AF5-42E3-96CB-95D1F896BF51}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -37,6 +39,10 @@ Global
 		{EE3BDBD9-E92C-40EF-93EA-B131D28F35A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EE3BDBD9-E92C-40EF-93EA-B131D28F35A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EE3BDBD9-E92C-40EF-93EA-B131D28F35A3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E68EB0D6-2AF5-42E3-96CB-95D1F896BF51}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E68EB0D6-2AF5-42E3-96CB-95D1F896BF51}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E68EB0D6-2AF5-42E3-96CB-95D1F896BF51}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E68EB0D6-2AF5-42E3-96CB-95D1F896BF51}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -45,6 +51,7 @@ Global
 		{67089978-2AB1-4C48-A2BE-2891864122FE} = {E05C1DD6-7C4E-45E8-A0F4-2CDACBE947B2}
 		{52A62192-9C16-48BA-87F8-79D164261397} = {CFFB1BCC-8040-48DD-AA3A-9F7E6B9F6B18}
 		{EE3BDBD9-E92C-40EF-93EA-B131D28F35A3} = {CFFB1BCC-8040-48DD-AA3A-9F7E6B9F6B18}
+		{E68EB0D6-2AF5-42E3-96CB-95D1F896BF51} = {CFFB1BCC-8040-48DD-AA3A-9F7E6B9F6B18}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B46E96EC-804B-4C4D-B1CA-CBD4576E9C0B}

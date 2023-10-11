@@ -37,7 +37,7 @@ the appsettings.json before you run it.**
 3. Allow yourself access by doing the following
    - Under Settings, left-click "Networking"
    - Place a check in the "Allow public access from any Azure service within Azure to this server" checkbox.
-   - Left click "Add current client IP address" or "Add 0.0.00 - 255.255.255.255" 
+   - Left click "Add current client IP address" or "Add 0.0.0.0 - 255.255.255.255" 
    - Left-click the "Save" button at the top.
 4. Get a connection string and adjust it.
    - Under Settings, left-click "Connect"
@@ -45,7 +45,8 @@ the appsettings.json before you run it.**
    - Copy the ADO.NET connection string ```Server=yourdbnamehere.postgres.database.azure.com;Database=MyStuff;Port=5432;User Id=youridhere;Password={your_password};Ssl Mode=Require;```
    - Adjust the Ssl Mode so that it looks like this ```Server=yourdbnamehere.postgres.database.azure.com;Database=MyStuff;Port=5432;User Id=youridhere;Password={your_password};Ssl Mode=VerifyCA;```
    - Finally, adjust your server name, user id and password to be what you used put in for Step 1 above.
-5. TODO: See if this step is really needed => Go to Overview and restart the server.
+5. Update appsettings.json (or override with secrets.json)
+   - Update the "Repository:DatabaseConnectionString" with your connection string.
  
 ## PostgreSQL Database setup
 Short version:
@@ -57,9 +58,32 @@ In order to use vector fields, we are following the instructions given with the
 They call for use to execute a specific command after creating the database:
 ```CREATE EXTENSION vector;```
 
-I've added that command to the 20231010223222_initial.cs migration file by hand.
+I've added that command to the 20231011175629_initial.cs migration file by hand.
 
 Run the project.
+
+## Open AI
+1. Create an Azure OpenAI resource in the portal.
+   - Basics
+       - Choose resource group
+       - Choose region (it's limited)
+       - Choose a name
+       - There is only one tier (S0)
+   - Network
+      - Take defaults 
+   - Tags
+      - Take defaults 
+   - Review + Create
+      - Left-click "Create" button
+2. Update appsettings.json (or override with secrets.json)
+   - Once deployed, Left-Click on "Keys and Endpoint" 
+   - Update the "OpenAI:Endpoint" with your endpoint (e.g., https://myNameFromStep1.openai.azure.com/) 
+   - Update the "OpenAI:Key" with Key1 or Key2
+3. Left-Click on "Model Deployments" and "Management Deployments" this will open Azure OpenAI Studio
+4. Create a deployment using the "text-embedding-ada-002" model version 2 and give it a name and Left-click "Create" button
+5. Update appsettings.json (or override with secrets.json)
+   - Update the "OpenAI:DeploymentOrModelName" with then name you chose in step 4
+   - Extra credit given if you use the "Advanced Option" to NOT consume all the remaining tokens!
 
 # Tools
 ---

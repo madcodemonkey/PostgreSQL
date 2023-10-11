@@ -1,0 +1,41 @@
+{
+	"info": {
+		"_postman_id": "9c10af90-322b-44e3-95f9-c1820e153357",
+		"name": "Github-PostgreSQL",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "2277005"
+	},
+	"item": [
+		{
+			"name": "Vector Example",
+			"item": [
+				{
+					"name": "Update Vector Fields",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:7068/DataManipulation/Update-Vector-Fields?batchSize=20",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7068",
+							"path": [
+								"DataManipulation",
+								"Update-Vector-Fields"
+							],
+							"query": [
+								{
+									"key": "batchSize",
+									"value": "20"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
