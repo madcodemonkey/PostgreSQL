@@ -7,7 +7,8 @@ public static class ServiceCollectionExtensions
 {
     public static IServiceCollection AddExampleDependencies(this IServiceCollection sc, IConfiguration config)
     {
-        
+        sc.AddAutoMapper(typeof(MappingProfiles).Assembly);
+
         sc.AddRepositories(config);
         sc.AddServices(config);
 

@@ -41,7 +41,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "https://localhost:7068/Search?query=what service use CDNs?",
+							"raw": "https://localhost:7068/Search?query=what services bill me for only what I use?",
 							"protocol": "https",
 							"host": [
 								"localhost"
@@ -53,7 +53,7 @@
 							"query": [
 								{
 									"key": "query",
-									"value": "what service use CDNs?"
+									"value": "what services bill me for only what I use?"
 								}
 							]
 						}

@@ -1,6 +1,6 @@
 ﻿namespace Example.Model;
 
-public class CloudResourceDto
+public class CloudResourceResponse
 {
     public int Id { get; set; }
 

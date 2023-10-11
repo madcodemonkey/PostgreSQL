@@ -1,3 +1,4 @@
+using AutoMapper;
 using Example.Model;
 using Example.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -10,32 +11,27 @@ public class SearchController : ControllerBase
 {
     private readonly ILogger<SearchController> _logger;
     private readonly ICloudResourceService _cloudResourceService;
+    private readonly IMapper _mapper;
 
-    public SearchController(ILogger<SearchController> logger, ICloudResourceService cloudResourceService)
+    /// <summary>
+    /// Constructor
+    /// </summary>
+    public SearchController(ILogger<SearchController> logger, 
+        ICloudResourceService cloudResourceService,
+        IMapper mapper)
     {
         _logger = logger;
         _cloudResourceService = cloudResourceService;
+        _mapper = mapper;
     }
 
     [HttpGet]
-    public async Task<IEnumerable<CloudResourceDto>> SearchAsync([FromQuery] string query, CancellationToken cancellationToken)
+    public async Task<IEnumerable<CloudResourceResponse>> SearchAsync([FromQuery] string query, CancellationToken cancellationToken)
     {
-        // TODO: Use Automapper
         var dbResult = await _cloudResourceService.FindNearestNeighborAsync(query, 3, cancellationToken);
 
-        var result = new List<CloudResourceDto>();
-        foreach (var item in dbResult)
-        {
-            result.Add(new CloudResourceDto()
-            {
-                Category = item.Category,
-                Id = item.Id,
-                Content = item.Content,
-                Title = item.Title
-            });
-        }
+        var result = _mapper.Map<List<CloudResourceResponse>>(dbResult);
 
         return result;
-
     }
 }
