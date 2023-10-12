@@ -3,7 +3,6 @@ This example shows how to create vector fields.  It also ties into Azure OpenAI 
 The database is created using code migrations and will run automatically be default, so please **setup the database and 
 the appsettings.json before you run it.**
 
-
 # Setup
 ## PostgreSQL Server Setup
 1. Create a 'Azure Database for PostgreSQL flexible server' resource in the Azure Portal.
@@ -12,7 +11,7 @@ the appsettings.json before you run it.**
       - Region: [closest to you]
       - PostgreSQL version: 15
       - Workload type: Development
-      - Compute storage: [took the default...Bursable, B1ms]
+      - Compute storage: [took the default...Burstable, B1ms]
       - Availablity Zone: No preference
       - Enable high availability: [left UNchecked]
       - Authentication method: PosgreSQL authentication only
@@ -41,14 +40,17 @@ the appsettings.json before you run it.**
    - Under Settings, left-click "Connect"
    - Expand the "Connect from your app" accordian thingy
    - Copy the ADO.NET connection string ```Server=yourdbnamehere.postgres.database.azure.com;Database=MyStuff;Port=5432;User Id=youridhere;Password={your_password};Ssl Mode=Require;```
-   - Adjust the Ssl Mode so that it looks like this ```Server=yourdbnamehere.postgres.database.azure.com;Database=MyStuff;Port=5432;User Id=youridhere;Password={your_password};Ssl Mode=VerifyCA;```
+   - Adjust the Ssl Mode to "VerifyCA" so that it looks like this 
+     ```Server=yourdbnamehere.postgres.database.azure.com;Database=MyStuff;Port=5432;User Id=youridhere;Password={your_password};Ssl Mode=VerifyCA;```
    - Finally, adjust your server name, user id and password to be what you used put in for Step 1 above.
 5. Update appsettings.json (or override with secrets.json)
    - Update the "Repository:DatabaseConnectionString" with your connection string.
  
 ## PostgreSQL Database setup
 Short version:
-Run the project.
+1. Run the project.
+2. Important! After the Swagger screen appears, STOP the project from running (why? see long winded version below).
+
 
 Long winded version:
 In order to use vector fields, we are following the instructions given with the 
@@ -58,7 +60,12 @@ They require us to execute a specific command after creating the database:
 
 I've added that command to the 20231011175629_initial.cs migration file by hand.
 
-Run the project.
+1. Run the project.
+2. Important: After the Swagger screen appears, STOP the project from running.
+   - Why? If you start populating the CloudResource table at this point it will work, but the second you query you'll get an error 
+     complaining about ```Can't cast database type .<unknown> to Vector```.  The vector extension was created as stated above, 
+     but the driver cached info about the database when it first connected.  Restarting flushes its old knowledge so that when 
+     it restarts it knows about vectors.
 
 ## Open AI
 1. Create an Azure OpenAI resource in the portal.
@@ -106,6 +113,8 @@ Run the project.
    - I'm using a beta version of Microsoft.SemanticKernel.Core (1.0.0-beta1) so they may move the CosineSimilarity extension I used in CloudResourceRepository.cs to a different location.
    - I'm using a beta version of Azure.AI.OpenAI (1.0.0-beta.8)
   
-
+# Notes
+- There is some great advice on indexing the vector fields [here on the site where the vector extension code lives](https://github.com/pgvector/pgvector#indexing).
+  The supported indext types (IVFFlat and HNSW) are explained with details on how to create them using SQL statement in the database.
 
 
