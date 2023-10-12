@@ -12,7 +12,7 @@ the appsettings.json before you run it.**
       - PostgreSQL version: 15
       - Workload type: Development
       - Compute storage: [took the default...Burstable, B1ms]
-      - Availablity Zone: No preference
+      - Availability Zone: No preference
       - Enable high availability: [left UNchecked]
       - Authentication method: PosgreSQL authentication only
       - Admin username: [your choice...needed below in connection string]
@@ -38,7 +38,7 @@ the appsettings.json before you run it.**
    - Left-click the "Save" button at the top.
 4. Get a connection string and adjust it.
    - Under Settings, left-click "Connect"
-   - Expand the "Connect from your app" accordian thingy
+   - Expand the "Connect from your app" accordion thingy
    - Copy the ADO.NET connection string ```Server=yourdbnamehere.postgres.database.azure.com;Database=MyStuff;Port=5432;User Id=youridhere;Password={your_password};Ssl Mode=Require;```
    - Adjust the Ssl Mode to "VerifyCA" so that it looks like this 
      ```Server=yourdbnamehere.postgres.database.azure.com;Database=MyStuff;Port=5432;User Id=youridhere;Password={your_password};Ssl Mode=VerifyCA;```
@@ -94,17 +94,17 @@ I've added that command to the 20231011175629_initial.cs migration file by hand.
 2. Use the postman collection at the root of this repository to call the "DataManipulation" controller's "Update-Vector-Fields" POST method 
    till you consistently get back zero items updated.  You can increase the batch size if you desire and we will still save every 10th item 
    as we progress through the db records that need their vector fields updated.  Just be aware that you could timeout or get throttled by
-   the OpenAI endoint as we try to generate embeddings for the fields.
+   the OpenAI endpoint as we try to generate embeddings for the fields.
 
 # Searching
 1. Run the Example Web API project as your startup project.
 2. Use the postman collection at the root of this repository to call "Search" method using semantic type queries (e.g. what services use CDNs?)
    - Note 1: See the database or the AzureCatalog.json in the Example.Repository project (seeds folder) to get a feel for what questions you can ask.
    - Note 2: I'm currently searching both the title and content vectors for the nearest X items and then in memory combining the findings and
-             doing a cosine comparision to find the best of those (see the code in CloudResourceRepository.cs, which lives in the Example.Repository project).
+             doing a cosine comparison to find the best of those (see the code in CloudResourceRepository.cs, which lives in the Example.Repository project).
 
 # Tools
-- You can connect to the the PostgreSQL database using [Azure Data Studio](https://learn.microsoft.com/en-us/sql/azure-data-studio/download-azure-data-studio?view=sql-server-ver16&tabs=redhat-install%2Credhat-uninstall) 
+- You can connect to the PostgreSQL database using [Azure Data Studio](https://learn.microsoft.com/en-us/sql/azure-data-studio/download-azure-data-studio?view=sql-server-ver16&tabs=redhat-install%2Credhat-uninstall) 
   with the PostgreSQL extension from Microsoft (add the way you add VSCode extension since Azure Data Studio uses the same shell as VSCode it should be very familiar).
 
 # Warnings
@@ -114,6 +114,6 @@ I've added that command to the 20231011175629_initial.cs migration file by hand.
   
 # Notes
 - There is some great advice on indexing the vector fields [here on the site where the vector extension code lives](https://github.com/pgvector/pgvector#indexing).
-  The supported indext types (IVFFlat and HNSW) are explained with details on how to create them using SQL statement in the database.
+  The supported index types (IVFFlat and HNSW) are explained with details on how to create them using SQL statement in the database.
 
 
