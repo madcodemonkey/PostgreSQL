@@ -47,12 +47,11 @@ the appsettings.json before you run it.**
    - Update the "Repository:DatabaseConnectionString" with your connection string.
  
 ## PostgreSQL Database setup
-Short version:
+### Short version:
 1. Run the project.
 2. Important! After the Swagger screen appears, STOP the project from running (why? see long winded version below).
 
-
-Long winded version:
+### Long winded version:
 In order to use vector fields, we are following the instructions given with the 
 [pgvector NuGet package](https://github.com/pgvector/pgvector-dotnet#entity-framework-core).
 They require us to execute a specific command after creating the database:
