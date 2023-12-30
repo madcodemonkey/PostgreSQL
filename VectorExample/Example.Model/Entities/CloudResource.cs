@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using Pgvector;
+
 namespace Example.Model;
 
 public class CloudResource

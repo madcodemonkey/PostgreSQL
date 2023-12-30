@@ -1,6 +1,6 @@
-﻿using Example.Model;
+﻿using System.Numerics.Tensors;
+using Example.Model;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.SemanticKernel.AI.Embeddings.VectorOperations;
 using Pgvector;
 using Pgvector.EntityFrameworkCore;
 
@@ -67,13 +67,14 @@ public class CloudResourceRepository : RepositoryBase<CloudResource, int>, IClou
         );
 
         // From these top items find the ones that are closest to the query 
-        // Note 1: To use the CosineSimilarity extension method it requires the Microsoft.SemanticKernel.Core NuGet package (1.0.0-beta1 Oct 2023)
-        // Note 2: Docs for CosineSimilarity https://learn.microsoft.com/en-us/dotnet/api/microsoft.semantickernel.ai.embeddings.vectoroperations.cosinesimilarityoperation.cosinesimilarity?view=semantic-kernel-dotnet
+        // Note 1: To use the CosineSimilarity extension method it requires the System.Numerics.Tensors NuGet package 
+        // Note 2: Docs for CosineSimilarity https://learn.microsoft.com/en-us/dotnet/api/system.numerics.tensors.tensorprimitives.cosinesimilarity?view=dotnet-plat-ext-8.0
         // Note 3: We are ordering from 1 to -1 (descending order) because items that are closer to 1 are more like each other.
-        var topItems = combinedList.OrderByDescending(x => x.TheVector?.CosineSimilarity(queryVector.ToArray()) ?? -1.0)
+        var topItems = combinedList.OrderByDescending(x => x.TheVector != null ? TensorPrimitives.CosineSimilarity(x.TheVector, queryVector.ToArray()) : -1.0)
             .Take(numberOfNeighbors)
             .ToList();
 
+        
         var result = topItems.Select(s => s.Data).ToList();
 
         return result;

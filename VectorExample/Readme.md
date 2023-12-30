@@ -31,7 +31,7 @@ the appsettings.json before you run it.**
    - Left-click the "Save" button at the top, which will kick off a deployment.
    - Reference:
 	 - [Microsoft docs on 'How to use PostgreSQL extensions'](https://learn.microsoft.com/en-us/azure/postgresql/flexible-server/concepts-extensions#how-to-use-postgresql-extensions)
-3. Allow yourself access by doing the following
+3. Allow yourself access by doing the following (assumes you did not do this in step 1)
    - Under Settings, left-click "Networking"
    - Place a check in the "Allow public access from any Azure service within Azure to this server" checkbox.
    - Left click "Add current client IP address" or "Add 0.0.0.0 - 255.255.255.255" 
@@ -42,14 +42,15 @@ the appsettings.json before you run it.**
    - Copy the ADO.NET connection string ```Server=yourdbnamehere.postgres.database.azure.com;Database=MyStuff;Port=5432;User Id=youridhere;Password={your_password};Ssl Mode=Require;```
    - Adjust the Ssl Mode to "VerifyCA" so that it looks like this 
      ```Server=yourdbnamehere.postgres.database.azure.com;Database=MyStuff;Port=5432;User Id=youridhere;Password={your_password};Ssl Mode=VerifyCA;```
-   - Finally, adjust your server name, user id and password to be what you used put in for Step 1 above.
+   - Adjust your server name, user id and password to be what you used put in for Step 1 above.
+   - Don't forget to give it a database name (MyStuff in the example above) since the connection string you pull from the Azure portal leaves it blank; otherwise, it will name the database after the user id.
 5. Update appsettings.json (or override with secrets.json)
    - Update the "Repository:DatabaseConnectionString" with your connection string.
  
 ## PostgreSQL Database setup
 ### Short version:
 1. Run the project.
-2. Important! After the Swagger screen appears, STOP the project from running (why? see long winded version below).
+2. **Important!** After the Swagger screen appears, STOP the project from running (why? see long winded version below).
 
 ### Long winded version:
 In order to use vector fields, we are following the instructions given with the 
@@ -57,14 +58,19 @@ In order to use vector fields, we are following the instructions given with the
 They require us to execute a specific command after creating the database:
 ```CREATE EXTENSION vector;```
 
+You can verify that it was applied using this SQL
+```SELECT typname FROM pg_type WHERE typname = 'vector';```
+You should get back one row with ```vector``` under the ```typname``` column
+Reference this [gist](https://gist.github.com/sageTimNewton/f20583ff1f0cf0af648bc0a0a91c0083) for a more detailed explanation.
+
 I've added that command to the 20231011175629_initial.cs migration file by hand.
 
 1. Run the project.
-2. Important: After the Swagger screen appears, STOP the project from running.
-   - Why? If you start populating the CloudResource table at this point it will work, but the second you query you'll get an error 
-     complaining about ```Can't cast database type .<unknown> to Vector```.  The vector extension was created as stated above, 
-     but the driver cached info about the database when it first connected.  Restarting flushes its old knowledge so that when 
-     it restarts it knows about vectors.
+2. Important: After the Swagger screen appears, STOP the project from running. Why? 
+   - If you start populating the CloudResource table with embeddings at this point it will work, you'll get this error ```System.InvalidCastException: Writing values of 'Pgvector.Vector' is not supported for parameters having no NpgsqlDbType or DataTypeName. Try setting one of these values to the expected database type.```.  
+   - If you don't, they when you query you'll get an error complaining about ```Can't cast database type .<unknown> to Vector```  
+   - The vector extension was created as stated above, but the driver cached info about the database when it first connected.  
+   - Restarting flushes its old knowledge so that when it restarts it knows about vectors.
 
 ## Open AI
 1. Create an Azure OpenAI resource in the portal.
@@ -83,11 +89,11 @@ I've added that command to the 20231011175629_initial.cs migration file by hand.
    - Once deployed, Left-Click on "Keys and Endpoint" 
    - Update the "OpenAI:Endpoint" with your endpoint (e.g., https://myNameFromStep1.openai.azure.com/) 
    - Update the "OpenAI:Key" with Key1 or Key2
-3. Left-Click on "Model Deployments" and "Management Deployments" this will open Azure OpenAI Studio
-4. Create a deployment using the "text-embedding-ada-002" model version 2 and give it a name and Left-click "Create" button
+3. Left-Click on "Model Deployments" and then the "Management Deployments" button, which will open Azure OpenAI Studio
+4. Create a deployment using the "text-embedding-ada-002" model version 2 (current default) and give it a name and Left-click "Create" button
    - Extra credit given if you use the "Advanced Option" to NOT consume all the remaining tokens!
 5. Update appsettings.json (or override with secrets.json)
-   - Update the "OpenAI:DeploymentOrModelName" with then name you chose in step 4
+   - Update the "OpenAI:DeploymentOrModelName" with the name you used in step 4
 
 # Populate the Vector fields with embeddings
 1. Run the Example Web API project as your startup project.
@@ -109,11 +115,11 @@ I've added that command to the 20231011175629_initial.cs migration file by hand.
 
 # Warnings
 - Update these ASAP when they go out of beta
-   - I'm using a beta version of Microsoft.SemanticKernel.Core (1.0.0-beta1) so they may move the CosineSimilarity extension I used in CloudResourceRepository.cs to a different location.
-   - I'm using a beta version of Azure.AI.OpenAI (1.0.0-beta.8)
+   - I'm using a beta version of Azure.AI.OpenAI (1.0.0-beta.12)
   
 # Notes
 - There is some great advice on indexing the vector fields [here on the site where the vector extension code lives](https://github.com/pgvector/pgvector#indexing).
   The supported index types (IVFFlat and HNSW) are explained with details on how to create them using SQL statement in the database.
-
+- I converted from using the Microsoft.SemanticKernel.Core Nuget package to the System.Numerics.Tensors Nuget package because Microsoft removed the CosineSimilarity 
+  function from Microsoft.SemanticKernel.Core. The older code can be found under the DotNet6 branch.
 

@@ -8,6 +8,10 @@ check with this command:
 ```
 dotnet tool list
 ```
+or in case you install it globally
+```
+dotnet tool list --global
+```
 
 install with this command:
 ```
@@ -18,7 +22,7 @@ dotnet tool install dotnet-ef --global
 
 update with this command:
 ```
-dotnet tool update --global dotnet-ef --version 7.0.12
+dotnet tool update --global dotnet-ef --version 8.0.0
 ```
 
 Notes

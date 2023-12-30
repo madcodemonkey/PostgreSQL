@@ -10,6 +10,9 @@ public class OpenAIService : IOpenAIService
     private readonly OpenAiSettings _settings;
     private OpenAIClient? _client;
 
+    /// <summary>
+    /// Constructor
+    /// </summary>
     public OpenAIService(IOptions<OpenAiSettings>  settings)
     {
         _settings = settings.Value;
@@ -22,9 +25,21 @@ public class OpenAIService : IOpenAIService
     /// <param name="cancellationToken">The cancellation token to stop the process if necessary</param>
     public async Task<Vector> GenerateEmbeddingAsync(string text, CancellationToken cancellationToken = default)
     {
+        return await GenerateEmbeddingAsync(new List<string> { text }, cancellationToken);
+    }
+
+    /// <summary>
+    /// Creates an embedding using the model specified in the settings.
+    /// </summary>
+    /// <param name="input">Input texts to get embeddings for, encoded as a an array of strings. Each input must not exceed 2048 tokens in length.
+    /// Unless you are embedding code, we suggest replacing newlines (\n) in your input with a single space, as we have observed inferior results when newlines are present.
+    /// </param>
+    /// <param name="cancellationToken">The cancellation token to stop the process if necessary</param>
+    public async Task<Vector> GenerateEmbeddingAsync(IEnumerable<string> input, CancellationToken cancellationToken = default)
+    {
         OpenAIClient client = GetClient();
 
-        var result = await client.GetEmbeddingsAsync(_settings.DeploymentOrModelName, new EmbeddingsOptions(text), cancellationToken);
+        var result = await client.GetEmbeddingsAsync(new EmbeddingsOptions(_settings.DeploymentOrModelName, input), cancellationToken);
 
         float[] embedding = result.Value.Data[0].Embedding.ToArray();
 
