@@ -109,7 +109,7 @@ I've added that command to the 20231011175629_initial.cs migration file by hand.
 
 # Warnings
 - Update these ASAP when they go out of beta
-   - I'm using a beta version of Microsoft.SemanticKernel.Core (1.0.0-beta1) so they may move the CosineSimilarity extension I used in CloudResourceRepository.cs to a different location.
+   - In this version, I'm still using a beta version of Microsoft.SemanticKernel.Core (1.0.0-beta1).  With the first release, they **REMOVED** the CosineSimilarity extension I used in CloudResourceRepository.cs.  I've fixed the code in the [DotNet8 branch](https://github.com/madcodemonkey/PostgreSQL/blob/DotNet8/VectorExample/Example.Repository/Repositories/CloudResourceRepository.cs) to use TensorPrimitives.CosineSimilarity from the System.Numerics.Tensors Nuget package.
    - I'm using a beta version of Azure.AI.OpenAI (1.0.0-beta.8)
   
 # Notes
