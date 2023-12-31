@@ -1,0 +1,17 @@
+version: '3.8'
+services:
+  db:
+    image: postgres:latest
+    container_name: PostgreSQL
+    restart: unless-stopped
+    user: 0:0
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: frog363root
+      POSTGRES_DB: example_DB
+    ports:
+      - 5432:5432
+    volumes:
+      - postgresservervol:/var/lib/postgresql/data:rw
+volumes:
+  postgresservervol:
